@@ -1,0 +1,19 @@
+.modal {
+	position: absolute;
+	background: #ccc;
+	
+	width: 95%;
+	height: 100%;	
+}
+
+.modal > .close{
+	float: right;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: inline-block;
+}

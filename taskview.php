@@ -40,7 +40,7 @@ function get_action($t_id){ //FIX
 	$con = new PDO("mysql:host=localhost;dbname=my", "root", "");
 	$con->exec("set names utf8");
 
-	$actions = array();
+	$actions 	= array();
 	$action_arr = array();
 	$action_arr2 = array();
 
@@ -65,7 +65,6 @@ function get_action($t_id){ //FIX
 			
 		}
 	}
-
 
 	return $actions;	
 }

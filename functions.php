@@ -25,6 +25,27 @@ function html_action( $arr ){
 	return $html;
 }
 
+function html_action2( $arr ){
+	$html  = html_span( $arr->id );
+	$html .= html_span( chinese_encode( $arr->param ), 'bold' );
+	
+	$url_next = "taskview.php?task=" . $arr->id_next;
+	$url_fail = "taskview.php?task=" . $arr->id_nextfail;
+
+	$ancor_next = html_ancor( $arr->id_next, $url_next ); 
+	$ancor_fail = html_ancor( $arr->id_nextfail, $url_fail ); 
+	
+	$div = "<div>" .
+				html_span( "Next: " . $ancor_next ) .
+				html_span( "Fail: " . $ancor_fail ) .
+				html_span( "Data: " . $arr->data  ) .
+			"</div>";
+
+	$html .= $div;
+
+	return $html;
+}
+
 function html_span( $str, $cssCLass = " " ){
 	return "<span class='$cssCLass'> $str  </span>";
 }

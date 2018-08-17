@@ -3,6 +3,7 @@
  <head>
  	<title></title>
  	<meta charset="utf-8">
+ 	<link rel="stylesheet" type="text/css" href="css/style.css">
  </head>
  <body>
 
@@ -13,60 +14,51 @@
 	$con->exec("set names utf8");
 	
 	$action_arr = array();
-	$query = "SELECT * FROM cq_action WHERE id = ?";
+	$query = "SELECT * FROM cq_action WHERE id = ? LIMIT 1";
 	$stmt = $con->prepare( $query );
+	
 	if ( $stmt->execute( array($_GET['task']) ) ) {
-		while( $row = $stmt->fetch(PDO::FETCH_OBJ) ){
+		
+		$action = $stmt->fetch(PDO::FETCH_OBJ);
+		// while( $row = $stmt->fetch(PDO::FETCH_OBJ) ){
 			
-			$action_arr['id'] 			= $row->id;
-			$action_arr['idNext'] 		= $row->id_next;
-			$action_arr['idNextFail'] 	= $row->id_nextfail;
-			$action_arr['type'] 		= $row->type;
-			$action_arr['data'] 		= $row->data;
-			$action_arr['param'] 		= chinese_encode( $row->param );
+		// 	$action_arr['id'] 			= $row->id;
+		// 	$action_arr['idNext'] 		= $row->id_next;
+		// 	$action_arr['idNextFail'] 	= $row->id_nextfail;
+		// 	$action_arr['type'] 		= $row->type;
+		// 	$action_arr['data'] 		= $row->data;
+		// 	$action_arr['param'] 		= chinese_encode( $row->param );
 			
-		}
-	}
-	
-	$html = html_action($action_arr);
-	echo '<div>' . $html . '</div>';
-	
+		// }
+	}	
+	// $html = html_action($action_arr);
+	$html = html_action2($action);
+	echo '<div>' . $html . '</div>';	
 
 // $arr = get_action($_GET['task']);	
-// $actions[] = $action_arr;
 // print_r($arr);
+
+// $actions[] = $action_arr;
 	
-function get_action($t_id){ //FIX 
+function get_action($action_id, $action_arr = array(), $i = 0){ //FIX 
+	
 	$con = new PDO("mysql:host=localhost;dbname=my", "root", "");
 	$con->exec("set names utf8");
 
-	$actions 	= array();
-	$action_arr = array();
-	$action_arr2 = array();
-
-	$query = "SELECT * FROM cq_action WHERE id = ?";
+	$query = "SELECT * FROM cq_action WHERE id = ? LIMIT 1";
 	$stmt = $con->prepare( $query );
-	if ( $stmt->execute( array($t_id) ) ) {
-		while( $row = $stmt->fetch(PDO::FETCH_OBJ) ){
-			
-			$action_arr['id'] 			= $row->id;
-			$action_arr['idNext'] 		= $row->id_next;
-			$action_arr['idNextFail'] 	= $row->id_nextfail;
-			$action_arr['type'] 		= $row->type;
-			$action_arr['data'] 		= $row->data;
-			$action_arr['param'] 		= chinese_encode( $row->param );
+	
+	if ( $stmt->execute( array($action_id) )) {
 
-			$actions[] = $action_arr;
+		$action = $stmt->fetch( PDO::FETCH_OBJ );
+		$action_arr[$i] = $action;
 
-			if( $action_arr['idNext'] != "0000" ){
-				$action_arr2 = get_action($action_arr['idNext']);
-				$actions[] = $action_arr2;
-			}
-			
-		}
+		if( $action->id_next != "0000")
+			$action_arr[ $i+1 ] = get_action( $action->id_next, $action_arr, $i+1 );
+	
 	}
 
-	return $actions;	
+	return $action_arr;	
 }
 
 ?>

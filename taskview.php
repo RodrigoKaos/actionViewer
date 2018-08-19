@@ -24,13 +24,11 @@
 	// $html = html_action2($action);
 	// echo '<div>' . $html . '</div>';	
 
-$arr = get_action( $_GET['task'] );	
-// print_r($arr);
+$arr = get_action($_GET['task']);	
+print_r($arr);
 
-foreach ( $arr as $key ) {
-	echo '<div>' . html_action( $key->id ) . '</div>';
-}
-
+// $actions[] = $action_arr;
+	
 function get_action( $action_id, $action_arr = array(), $con = null, $i = 0 ){
 	
 	if( $con == null ){
@@ -45,27 +43,30 @@ function get_action( $action_id, $action_arr = array(), $con = null, $i = 0 ){
 	if ( $stmt->execute( array($action_id) )) {
 		$action = $stmt->fetch( PDO::FETCH_OBJ );
 		$action_arr[ $i ] = $action;		
-		
-		if( $action->id_next != "0000")
-			if( ! is_indexed( $action->id_next, $action_arr ))
+			
+		if( $action->id_next != "0000"){
+			if( ! is_indexed( $action->id_next, $action_arr ) )
 					$action_arr = get_action( $action->id_next, $action_arr, $con, $i+1 );
+		}
 
-		if( $action->id_nextfail != "0000" )
+		if( $action->id_nextfail != "0000" ){
 			if( ! is_indexed( $action->id_nextfail, $action_arr ) )
 					$action_arr = get_action( $action->id_nextfail, $action_arr, $con, $i+1 );
+		}
 
+			
 	}
 
 	return $action_arr;	
 }
 
-function is_indexed( $id, $arr ){
+function is_indexed( $id, $arr){
 	
-	foreach ( $arr as $key => $value ) {
+	foreach ($arr as $key => $value) {
 		if( $value->id == $id )
 			return true;
 	}
-
+	
 	return false;
 }
 

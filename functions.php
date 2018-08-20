@@ -6,7 +6,7 @@ function chinese_encode( $str ){
 
 function html_action( $arr ){
 	$html  = html_span( $arr->id );
-	$html .= html_span( chinese_encode( $arr->param ), 'bold' );
+	$html .= html_span_editable( chinese_encode( $arr->param ), 'param bold' );
 	
 	$url_next = "taskview.php?task=" . $arr->id_next;
 	$url_fail = "taskview.php?task=" . $arr->id_nextfail;
@@ -14,10 +14,11 @@ function html_action( $arr ){
 	$ancor_next = html_ancor( $arr->id_next, $url_next ); 
 	$ancor_fail = html_ancor( $arr->id_nextfail, $url_fail ); 
 	
-	$div = "<div>" .
+	$div = "<div class='margin'>" .
 				html_span( "Next: " . $ancor_next ) .
 				html_span( "Fail: " . $ancor_fail ) .
 				html_span( "Data: " . $arr->data  ) .
+				html_button( "Edit", 'edit a'.$arr->id ).
 			"</div>";
 
 	$html .= $div;
@@ -25,10 +26,21 @@ function html_action( $arr ){
 	return $html;
 }
 
-function html_span( $str, $cssCLass = " " ){
+function html_span( $str, $cssCLass = "" ){
 	return "<span class='$cssCLass'> $str  </span>";
+}
+
+function html_span_editable( $str, $cssCLass = "" ){
+	return "<span class='$cssCLass' contenteditable='false'> $str  </span>";
+}
+function html_div( $str, $cssCLass = "" ){
+	return "<div class='$cssCLass'> $str  </div>";
 }
 
 function html_ancor( $str, $url ){
 	return "<a href=$url>$str</a>";
+}
+
+function html_button( $str, $cssClass = "" ){
+	return "<button class='$cssClass'> $str </button>";
 }

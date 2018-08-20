@@ -1,22 +1,43 @@
- <!DOCTYPE html>
- <html>
- <head>
- 	<title></title>
- 	<meta charset="utf-8">
- 	<link rel="stylesheet" type="text/css" href="css/style.css">
- </head>
- <body>
 
 <?php 
 
 require_once('functions.php');
 
-$arr = get_action( $_GET['task'] );
+?>
 
-foreach ( $arr as $key => $value ) {
-	echo '<div>' . html_action( $value ) . '</div>';
-}
-	
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+
+<div class="task-list">
+
+	<?php
+
+	$arr = get_action( $_GET['task'] );
+
+	foreach ( $arr as $key => $value ) {
+		$div = html_action( $value );
+		echo html_div( $div, 'a'. $value->id );
+	}
+
+	?>
+
+</div>
+
+ 
+ <script type="text/javascript" src='js/action.js'></script>
+ </body>
+ </html>
+
+<?php 
+
 function get_action( $action_id, $action_arr = array(), $con = null, $i = 0 ){
 	
 	if( $con == null ){
@@ -59,8 +80,3 @@ function is_indexed( $id, $arr){
 }
 
 ?>
-
-
- 
- </body>
- </html>

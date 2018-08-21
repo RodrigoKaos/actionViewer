@@ -27,18 +27,19 @@ function html_action( $arr ){
 }
 
 function html_span( $str, $cssCLass = "" ){
-	return "<span class='$cssCLass'> $str  </span>";
+	return "<span class='$cssCLass'> $str </span>";
 }
 
 function html_span_editable( $str, $cssCLass = "" ){
-	return "<span class='$cssCLass' contenteditable='false'> $str  </span>";
+	return "<span class='$cssCLass' contenteditable='false'> $str </span>";
 }
+
 function html_div( $str, $cssCLass = "" ){
-	return "<div class='$cssCLass'> $str  </div>";
+	return "<div class='$cssCLass'> $str </div>";
 }
 
 function html_ancor( $str, $url ){
-	return "<a href=$url>$str</a>";
+	return "<a href='$url'> $str </a>";
 }
 
 function html_button( $str, $cssClass = "" ){

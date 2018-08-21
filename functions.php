@@ -6,7 +6,8 @@ function chinese_encode( $str ){
 
 function html_action( $arr ){
 	$html  = html_span( $arr->id );
-	$html .= html_span_editable( chinese_encode( $arr->param ), 'param bold' );
+	// $html .= html_span_editable( chinese_encode( $arr->param ), 'param bold' );
+	$html .= html_span_editable( $arr->param, 'param bold' );
 	
 	$url_next = "taskview.php?task=" . $arr->id_next;
 	$url_fail = "taskview.php?task=" . $arr->id_nextfail;

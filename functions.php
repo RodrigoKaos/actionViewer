@@ -9,6 +9,8 @@ function html_action( $arr ){
 	// $html .= html_span_editable( chinese_encode( $arr->param ), 'param bold' );
 	$html .= html_span_editable( $arr->param, 'param bold' );
 	
+	// $url_next = "taskview.php/#" . $arr->id_next;
+	// $url_fail = "taskview.php/#" . $arr->id_nextfail;
 	$url_next = "taskview.php?task=" . $arr->id_next;
 	$url_fail = "taskview.php?task=" . $arr->id_nextfail;
 
@@ -19,6 +21,7 @@ function html_action( $arr ){
 				html_span( "Next: " . $ancor_next ) .
 				html_span( "Fail: " . $ancor_fail ) .
 				html_span( "Data: " . $arr->data  ) .
+				html_span( "Type: " . $arr->type  ) .
 				html_button( "Edit", 'edit a'.$arr->id ).
 			"</div>";
 
@@ -27,8 +30,8 @@ function html_action( $arr ){
 	return $html;
 }
 
-function html_span( $str, $cssCLass = "" ){
-	return "<span class='$cssCLass'> $str </span>";
+function html_span( $str, $cssCLass = "", $elementId = "" ){
+	return "<span id='$elementId' class='$cssCLass'> $str </span>";
 }
 
 function html_span_editable( $str, $cssCLass = "" ){

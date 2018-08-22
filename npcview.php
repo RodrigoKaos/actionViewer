@@ -23,7 +23,7 @@ if( !isset($_GET['map']) ){
 
 <table>
 	<tr>
-		<td>Id</td><td>Name</td><td>Map Id</td><td>Task</td>
+		<td>Id</td><td>Name</td><td>Map Id</td><td>Action</td>
 	</tr>
 
 <?php
@@ -33,8 +33,8 @@ if ( $stmt->execute( array($_GET['map']) ) ) {
 		echo "<tr>";
 		echo "<td>" . $row->id;
 		echo "<td>" . chinese_encode( $row->name );
-		echo "<td>" . $row->mapid;
-		echo "<td class='task'><a href='taskview.php?task=$row->task0'>" . $row->task0;
+		echo "<td><a href='npcview.php?map=$row->mapid'>" . $row->mapid . "</a>";
+		echo "<td class='task'><a href='actionview.php?id=$row->task0'>" . $row->task0;
 	}
 }
 ?>

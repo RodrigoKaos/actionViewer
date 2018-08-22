@@ -20,7 +20,7 @@ require_once('functions.php');
 
 	<?php
 
-	$arr = get_action( $_GET['task'] );
+	$arr = get_action( $_GET['id'] );
 
 	foreach ( $arr as $key => $value ) {
 		$div = html_action( $value );

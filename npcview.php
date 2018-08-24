@@ -17,11 +17,11 @@ $res = mysql_query( $query_select );
 $table_lines = '';
 
 while( $row = mysql_fetch_assoc( $res ) ){
-	$table_lines = "<tr>" .
-	"<td>" . $row->['id'] .
+	$table_lines .= "<tr>" .
+	"<td>" . $row['id'] .
 	"<td>" . chinese_encode( $row['name'] ) .
-	"<td><a href=#$row['mapid']>" . $row['mapid'] . "</a>" .
-	"<td class='task'><a href='actionview.php?id=$row['task0']'>" . $row['task0'];
+	"<td><a href='?map=" . $row['mapid'] . "'>" . $row['mapid'] . "</a>" .
+	"<td class='task'><a href='actionview.php?id='" . $row['task0'] . "'>" . $row['task0'];
 }
 	
 

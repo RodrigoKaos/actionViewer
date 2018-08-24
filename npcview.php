@@ -45,7 +45,7 @@ while( $row = mysql_fetch_assoc( $res ) ){
 		<th>Id</th><th>Name</th><th>Map Id</th><th>Action</th>
 	</tr>
 
-	<?php echo $table_lines; ?>
+	<?php echo $table_trs; ?>
 	
 </table>
 

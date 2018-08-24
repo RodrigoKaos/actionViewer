@@ -34,7 +34,7 @@ function get_connection(){
 
 	$host	= 'localhost';
 	$user	= 'root';	
-	$pass	= '';
+	$pass	= 'test';
 	$db		= 'my';
 
 	$con = mysql_connect( $host, $user, $pass );

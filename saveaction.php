@@ -1,25 +1,23 @@
 <?php 
 
-$id 	= explode('a', $_GET['id'])[1];
+require_once('functions.php');
+
+//echo $_GET['id'];
+$id 	= explode('a', $_GET['id'] );
 $param 	= $_GET['param'];
 $msg 	= '';
 
-try{
+// $con = new PDO("mysql:host=localhost;dbname=my", "root", "");
+// $con->exec("set names utf8");	
+$con = get_connection();
+$qry = sprintf( "UPDATE cq_action SET param = '%s' WHERE id = %s", $param, $id[1] );
 
-	$con = new PDO("mysql:host=localhost;dbname=my", "root", "");
-	$con->exec("set names utf8");	
+$res = mysql_query( $qry );
+//$count = $smtm->execute( array( $param, $id ) );
+$msg = 'Action updated! ';
 
-	$query = 'UPDATE cq_action SET param = ? WHERE id = ?';
+if( !$res )	$msg = mysql_error($con) . " : " . mysql_errno($con);
 
-	$smtm = $con->prepare($query);
-	$count = $smtm->execute( array( $param, $id ) );
-
-	$msg = 'Action updated!';
-
-}catch( PDOException $e ){
-	$msg = $e;	
-}
-
-echo $msg;
+echo $msg . $param . " " .$id[1];
 
 ?>

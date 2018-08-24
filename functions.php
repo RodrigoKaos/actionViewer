@@ -49,3 +49,16 @@ function html_ancor( $str, $url ){
 function html_button( $str, $cssClass = "" ){
 	return "<button class='$cssClass'> $str </button>";
 }
+
+function get_connection(){
+
+	$host	= 'localhost';
+	$user	= 'root';	
+	$pass	= '';
+	$db		= 'my';
+
+	$con = mysql_connect( $host, $user, $pass );
+	mysql_select_db( $db );
+
+	return $con;		
+}

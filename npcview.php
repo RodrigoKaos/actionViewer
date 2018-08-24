@@ -2,42 +2,43 @@
 
 require_once('functions.php');
 
-$con = new PDO("mysql:host=localhost;dbname=my", "root", "");
-$con->exec("set names utf8");
+$con = get_connection();
+$query_select = "SELECT * FROM cq_npc WHERE mapid ";
 
-$str = "SELECT * FROM cq_npc";
-$str2 = $str  . " WHERE mapid = ?";
-$str3 = $str  . " WHERE mapid > ?";
-$query = $str2;
+if( ! isset($_GET['map']) ){
+	$query_select .= " > 0 ORDER BY ID";
 
-
-if( !isset($_GET['map']) ){
-	$_GET['map'] = '0';
-	$query = $str3;
+}else { //TEST ternary logic
+	$equal_to = " = " . $_GET['map'] . " ORDER BY ID";
+	$query_select .= $equal_to;
 }
 
+$res = mysql_query( $query_select );
+$table_lines = '';
+
+while( $row = mysql_fetch_assoc( $res ) ){
+	$table_lines = "<tr>" .
+	"<td>" . $row->['id'] .
+	"<td>" . chinese_encode( $row['name'] ) .
+	"<td><a href=#$row['mapid']>" . $row['mapid'] . "</a>" .
+	"<td class='task'><a href='actionview.php?id=$row['task0']'>" . $row['task0'];
+}
+	
+
 ?>
+
 <div class="modal hide">
 	<span class="close">X</span>
 </div>
 
 <table>
 	<tr>
-		<td>Id</td><td>Name</td><td>Map Id</td><td>Action</td>
+		<th>Id</th><th>Name</th><th>Map Id</th><th>Action</th>
 	</tr>
 
-<?php
-$stmt = $con->prepare($query . 'ORDER BY ID'); 	
-if ( $stmt->execute( array($_GET['map']) ) ) {
-	while( $row = $stmt->fetch(PDO::FETCH_OBJ) ){
-		echo "<tr>";
-		echo "<td>" . $row->id;
-		echo "<td>" . chinese_encode( $row->name );
-		echo "<td><a href='npcview.php?map=$row->mapid'>" . $row->mapid . "</a>";
-		echo "<td class='task'><a href='actionview.php?id=$row->task0'>" . $row->task0;
-	}
-}
-?>
-
+	<?php
+		echo $table_lines;
+	?>
+	
 </table>
 

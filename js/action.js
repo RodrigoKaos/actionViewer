@@ -21,13 +21,15 @@ Array.from( d.querySelectorAll('.edit'))
 			btnSave.innerHTML = "Save";
 			btnSave.onclick = () => {
 				saveAction( aux );
+				btnEdit.disabled = false;
+				param.contentEditable = false;
 			}
 
 		param.after(btnSave);
 	})
 });
 
-function saveAction( action ){
+function saveAction( action ){ //REFACTOR
 	// console.log(action);
 	let btnSave = d.querySelector( '.save.' + action );
 	// console.log(btnSave.classList.value);
@@ -35,6 +37,12 @@ function saveAction( action ){
 	let	aux = btnSave.parentNode.classList.value.split(" ").pop();
 
 		paramData[aux].new = btnSave.previousElementSibling.innerHTML;
+
+		if( isTranslated() ){
+			paramData[aux].new = fixTranslation( paramData[aux].new );
+		}
+
+		paramData[aux].new = paramData[aux].new.replace( /&nbsp;/g, '');
 
 		//compare texts
 		if( ! confirm('Are you sure?') ){
@@ -44,12 +52,34 @@ function saveAction( action ){
 
 		}else{
 			//verify param is empty
-			let url = 'saveaction.php?id=' + aux + '&param=' + paramData[aux].new;//CHANGE TO POST
-			fetch( url )
-			.then( res => res.text() )
-			.then( msg => {
-				console.log( msg );
-				btnSave.disabled = false;
-			})
+			paramLenght = 127;
+			if( paramData[aux].new.length > paramLenght ){ //FIX
+				
+				let str = paramData[aux].new.substring( paramLenght );
+				paramData[aux].new = paramData[aux].new.substring( 0, paramLenght );
+				console.log( paramData[aux].new.length, str.length );
+				alert( "Add this string to the next action: " + str );
+				// alert('the text must have less than 127 characters');
+			}else{
+				
+				let url = 'saveaction.php?id=' + aux + '&param=' + paramData[aux].new;//CHANGE TO POST
+				
+				fetch( url )
+				.then( res => res.text() )
+				.then( msg => {
+					console.log( msg );
+					btnSave.disabled = false;
+				})
+			}
 		}
+}
+
+function isTranslated(){
+	return d.querySelector('.translated-ltr') !== null;
+}
+
+function fixTranslation( str ){
+	str = str.replace( /<font style="vertical-align: inherit;">/g, '');
+	str = str.replace( /<\/font>/g, '');
+	return str;
 }

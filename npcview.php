@@ -33,6 +33,8 @@ while( $row = mysql_fetch_assoc( $res ) ){
 	$table_trs .= html_tr( $table_tds );
 }
 
+echo html_ancor( "NPC", "http://localhost/actionViewer");
+
 ?>
 
 <div class="modal hide">

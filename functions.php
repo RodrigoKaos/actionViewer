@@ -8,10 +8,10 @@ function html_action( $obj ){
 	$html  = html_span( $obj->id );
 	$html .= html_span_editable( chinese_encode( $obj->param ), 'param bold' );
 	
-	$url_next = "#" . $obj->id_next;
-	$url_fail = "#" . $obj->id_nextfail;
-	// $url_next = "taskview.php?task=" . $obj->id_next;
-	// $url_fail = "taskview.php?task=" . $obj->id_nextfail;
+	// $url_next = "#" . $obj->id_next;
+	// $url_fail = "#" . $obj->id_nextfail;
+	$url_next = "actionview.php?id=" . $obj->id_next;
+	$url_fail = "actionview.php?id=" . $obj->id_nextfail;
 
 	$ancor_next = html_ancor( $obj->id_next, $url_next ); 
 	$ancor_fail = html_ancor( $obj->id_nextfail, $url_fail ); 

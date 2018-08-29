@@ -1,7 +1,12 @@
 <?php 
 
+function html_( $el , $str, $cssClass = "", $opt = "" ){
+	return "<$el class='$cssClass' $opt > $str </$el>";
+}
+
 function html_span( $str, $cssCLass = "", $elementId = "" ){
-	return "<span id='$elementId' class='$cssCLass'> $str </span>";
+	return html_( 'span', $str, $cssCLass, "id='$elementId'");
+	// return "<span id='$elementId' class='$cssCLass'> $str </span>";
 }
 
 function html_span_editable( $str, $cssCLass = "" ){

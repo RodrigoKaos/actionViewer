@@ -25,7 +25,7 @@ while( $row = mysql_fetch_assoc( $res ) ){
 	$url_action = "actionview.php?id=" . $row['task0'];
 	$ancor_action = html_ancor( $row['task0'], $url_action );
 
-	$table_tds 	= html_td( $row['id'] );
+	$table_tds 	= html_( 'td', $row['id'] );
 	$table_tds .= html_td( chinese_encode( $row['name'] ));
 	$table_tds .= html_td( $ancor_map );
 	$table_tds .= html_td( $ancor_action, 'task' ); //change class selector??

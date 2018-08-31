@@ -48,9 +48,14 @@ function saveAction( action ){ //REFACTOR
 
 	if( confirm('Are you sure?') ){
 
-		let url = 'saveaction.php?id=' + aux + '&param=' + paramData[aux].new;//CHANGE TO POST
+		let url = 'saveaction.php';
+		let data = "id=" + aux + "&param=" + paramData[aux].new; 
 		
-		fetch( url )
+		fetch( url, {
+			method : 'POST',
+			body :  data,
+			headers : { 'Content-Type' : 'application/x-www-form-urlencoded' }
+		})
 		.then( res => res.text() )
 		.then( msg => {
 			console.log( msg );
@@ -61,7 +66,7 @@ function saveAction( action ){ //REFACTOR
 
 	console.log('No');
 	btnSave.disabled = false;
-	//RESET PARAM?
+	//RESET PARAM
 }
 
 function isTranslated(){

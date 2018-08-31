@@ -7,71 +7,61 @@ Array.from( d.querySelectorAll('.edit'))
 	
 	btnEdit.addEventListener('click', () => {
 
-		let aux = btnEdit.classList.value.split(" ").pop();
-		btnEdit.disabled = true;
-		
-		let param = d.querySelector( 'div.' + aux + ' .param' );
-			param.contentEditable = true;
-		
+		let aux = btnEdit.classList.value.split(" ").pop();		
+		let param = d.querySelector( 'div.' + aux + ' .param' );			
+		let btnSave = createSaveBtn( aux, () => {
+			saveAction( aux );
+			btnEdit.disabled = false;
+			param.contentEditable = false;
+			button.parentNode.removeChild( btnSave );
+		});
+
 		paramData[aux] = { "original" : param.innerHTML };
-
-		let btnSave = d.createElement('button');
-			btnSave.classList.add( 'save' );
-			btnSave.classList.add( aux );
-			btnSave.innerHTML = "Save";
-			btnSave.onclick = () => {
-				saveAction( aux );
-				btnEdit.disabled = false;
-				param.contentEditable = false;
-			}
-
+		btnEdit.disabled = true;
+		param.contentEditable = true;
 		param.after(btnSave);
 	})
 });
 
 function saveAction( action ){ //REFACTOR
-	// console.log(action);
+
 	let btnSave = d.querySelector( '.save.' + action );
-	// console.log(btnSave.classList.value);
-		btnSave.disabled = true;
 	let	aux = btnSave.parentNode.classList.value.split(" ").pop();
+	btnSave.disabled = true;	
+	
+	//verify param is empty
+	//compare texts
+	//NEW PARAM === ORIGINAL PARAM???
+	let newParam = btnSave.previousElementSibling.innerHTML;
+	newParam = fixParam( newParam );
+	paramData[aux].new = newParam;
+	
+	let maxParamLenght = 127;	
+	if( paramData[aux].new.length > maxParamLenght ){ //FIX
 
-		paramData[aux].new = btnSave.previousElementSibling.innerHTML;
+		let str = paramData[aux].new.substring( maxParamLenght );
+		paramData[aux].new = paramData[aux].new.substring( 0, maxParamLenght );
+		console.log( paramData[aux].new.length, str.length );
+		alert( "Add this string to the next action: " + str );
+		return false;
+	}
 
-		if( isTranslated() ){
-			paramData[aux].new = fixTranslation( paramData[aux].new );
-		}
+	if( confirm('Are you sure?') ){
 
-		paramData[aux].new = paramData[aux].new.replace( /&nbsp;/g, '');
-
-		//compare texts
-		if( ! confirm('Are you sure?') ){
-			console.log('No');
+		let url = 'saveaction.php?id=' + aux + '&param=' + paramData[aux].new;//CHANGE TO POST
+		
+		fetch( url )
+		.then( res => res.text() )
+		.then( msg => {
+			console.log( msg );
 			btnSave.disabled = false;
-			//RESET PARAM?
+		})
+		
+	}
 
-		}else{
-			//verify param is empty
-			paramLenght = 127;
-			if( paramData[aux].new.length > paramLenght ){ //FIX
-				
-				let str = paramData[aux].new.substring( paramLenght );
-				paramData[aux].new = paramData[aux].new.substring( 0, paramLenght );
-				console.log( paramData[aux].new.length, str.length );
-				alert( "Add this string to the next action: " + str );
-				// alert('the text must have less than 127 characters');
-			}else{
-				
-				let url = 'saveaction.php?id=' + aux + '&param=' + paramData[aux].new;//CHANGE TO POST
-				
-				fetch( url )
-				.then( res => res.text() )
-				.then( msg => {
-					console.log( msg );
-					btnSave.disabled = false;
-				})
-			}
-		}
+	console.log('No');
+	btnSave.disabled = false;
+	//RESET PARAM?
 }
 
 function isTranslated(){
@@ -82,4 +72,22 @@ function fixTranslation( str ){
 	str = str.replace( /<font style="vertical-align: inherit;">/g, '');
 	str = str.replace( /<\/font>/g, '');
 	return str;
+}
+
+function fixParam( str ){
+	if( isTranslated() ) str = fixTranslation( str );
+	str = str.replace( /&nbsp;/g, '');
+	str = str.replace( /'/g, '');
+	return str;
+}
+
+function createSaveBtn( actionClass, onClick ){
+
+	let button = d.createElement('button');
+		button.classList.add( 'save' );
+		button.classList.add( actionClass );
+		button.innerHTML = "Save";
+		button.onclick = onClick;
+
+	return button;
 }

@@ -2,25 +2,17 @@
 
 require_once('functions.php');
 
-//echo $_GET['id'];
-$id 	= explode('a', $_GET['id'] );
-$param 	= $_GET['param'];
+$id 	= explode('a', $_POST['id'] );
+$param 	= $_POST['param'];
 $msg 	= '';
+$con 	= get_connection();
 
-echo strlen( $param );
-// $con = new PDO("mysql:host=localhost;dbname=my", "root", "");
-// $con->exec("set names utf8");	
-$con = get_connection();
-// $qry = sprintf( "UPDATE cq_action SET param = '%s' WHERE id = %s", $param, $id[1] );
-$qry = "UPDATE cq_action SET param = '$param' WHERE id = $id[1]";
-echo "$qry";
-
-$res = mysql_query( $qry );
-//$count = $smtm->execute( array( $param, $id ) );
-$msg = 'Action updated! ';
+$query_update = "UPDATE cq_action SET param = '$param' WHERE id = $id[1]";
+$res = mysql_query( $query_update );
+$msg = 'Action updated!';
 
 if( !$res )	$msg = mysql_error($con) . " : " . mysql_errno($con);
 
-echo $msg . $param . " " .$id[1];
+echo $msg;
 
 ?>

@@ -19,7 +19,7 @@ require_once('includes/html_functions.php');
 
 <?php echo html_ancor( "NPC", "http://localhost/actionViewer"); ?>
 
-<div class="task-list">
+<div class="action-list">
 
 	<?php
 

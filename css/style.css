@@ -1,6 +1,6 @@
 .modal {
 	position: absolute;
-	background: #ccc;
+	background: #CCC;
 	
 	width: 95%;
 	height: 100%;	
@@ -22,12 +22,21 @@
 	font-weight: bold;
 }
 
+.error {
+	color : #F00;
+}
+
+.param.error {
+	border: 2px solid #F00;
+}
+
+
 .margin {
 	margin: 5px;
 }
 
-.task-list > div {	
-	background: #ccc;
+.action-list > div {	
+	background: #CCC;
 	margin-top: 10px;
 	padding: 10px;
 	min-height: 50px;
@@ -39,5 +48,7 @@ span {
 }
 
 .param {
-	background: #fff;
+	background: #FFF;
+	max-width: 600px;
+	display: inline-block;
 }

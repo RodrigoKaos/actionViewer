@@ -38,6 +38,8 @@ function html_td( $str, $cssClass = "" ){
 	return "<td class='$cssClass'> $str </td>";
 }
 
-
+function html_input( $str, $cssClass = "", $opt = "" ){
+	return "<input value=$str class='$cssClass' $opt />";
+}
 
 

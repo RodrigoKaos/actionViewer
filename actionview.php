@@ -17,7 +17,7 @@ require_once('includes/html_functions.php');
 
 <body> 
 
-<?php echo html_ancor( "NPC", "http://localhost/actionViewer"); ?>
+<?php echo html_ancor( "NPC", "/actionViewer"); ?>
 
 <div class="action-list">
 

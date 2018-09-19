@@ -26,6 +26,10 @@
 	color : #F00;
 }
 
+.incomplete {
+	background: #ccc;
+}
+
 .param.error {
 	border: 2px solid #F00;
 }

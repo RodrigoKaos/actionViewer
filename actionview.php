@@ -43,9 +43,7 @@ require_once('includes/html_functions.php');
 
 function get_action( $action_id, $action_arr = array(), $con = null, $i = 0 ){
 	
-	if( $con == null ){
-		$con = get_connection();
-	}
+	if( $con == null ) $con = get_connection();
 	
 	$qry = sprintf( "SELECT * FROM cq_action WHERE id = %s LIMIT 1", $action_id );
 	$res = mysql_query( $qry );
@@ -55,28 +53,37 @@ function get_action( $action_id, $action_arr = array(), $con = null, $i = 0 ){
 	if( $action != false ){
 		$action_arr[ $i ] = $action;
 
-		if( $action->id_next != "0000")
-			if( ! is_indexed( $action->id_next, $action_arr ) )
-					$action_arr = get_action( $action->id_next, $action_arr, $con, $i+1 );
+		get_action_helper( $action->id_next, $action_arr, $con );
+		get_action_helper( $action->id_nextfail, $action_arr, $con );
+
+		// if( $action->id_next != "0000")
+		// 	if( ! is_indexed( $action->id_next, $action_arr ) )
+		// 			$action_arr = get_action( $action->id_next, $action_arr, $con, $i+1 );
 		
 
-		if( $action->id_nextfail != "0000" )
-			if( ! is_indexed( $action->id_nextfail, $action_arr ) )
-					$action_arr = get_action( $action->id_nextfail, $action_arr, $con, $i+1 );
+		// if( $action->id_nextfail != "0000" )
+		// 	if( ! is_indexed( $action->id_nextfail, $action_arr ) )
+		// 			$action_arr = get_action( $action->id_nextfail, $action_arr, $con, $i+1 );
 		
 	}
 	
 	return $action_arr;	
 }
 
-function is_indexed( $id, $arr){
-	
-	foreach ($arr as $key => $value) {
-		if( $value->id == $id )
-			return true;
-	}
-	
-	return false;
+function get_action_helper( $id, $arr, $con ){
+	if( $id != "0000")
+			if( ! array_key_exists( $id, $arr ) )
+					$arr = get_action( $id, $arr, $con, $i+1 );
 }
+
+// function is_indexed( $id, $arr){
+	
+// 	foreach ($arr as $key => $value) {
+// 		if( $value->id == $id )
+// 			return true;
+// 	}
+	
+// 	return false;
+// }
 
 ?>

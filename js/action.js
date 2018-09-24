@@ -1,8 +1,8 @@
-var d = document;
-var paramData = {};
+const d = document;
+let paramData = {};
 
 Array.from( d.querySelectorAll('.edit')).map( btnEdit => {
-	btnEdit.addEventListener( 'click', handleEditAction );	
+	btnEdit.addEventListener( 'click', handleEditAction );
 });
 
 function handleEditAction(){
@@ -16,9 +16,9 @@ function handleEditAction(){
 		btnSave.parentNode.removeChild( btnSave );
 	});
 
-	if( paramData[actionSelector] == undefined ) //FIX
-		paramData[actionSelector] = { 'original' : param.innerHTML };//FIX
-	
+	if( paramData[actionSelector] == undefined ) //FIXME: Keep old parameter
+		paramData[actionSelector] = { 'original' : param.innerHTML };
+
 	param.addEventListener( 'input', handleMaxLength );
 
 	this.disabled = true;
@@ -35,7 +35,7 @@ function handleMaxLength(){
 		this.after(lengthSpan);
 	}
 
-	if( d.querySelector('.length') != null )	
+	if( d.querySelector('.length') != null )
 			d.querySelector('.length').innerHTML = this.innerHTML.length;
 
 	if( !validateMaxLength( this.innerHTML.length )){
@@ -94,7 +94,7 @@ function handleSaveAction( actionSelector ){
 
 	//------
 	let paramNew = d.querySelector( '.' + actionSelector + ' .param').innerHTML;
-	
+
 	if( paramNew == paramData[actionSelector].original ){
 		console.log("Param wasn't modified...");
 		return;
@@ -111,13 +111,13 @@ function handleSaveAction( actionSelector ){
 	btnSave.disabled = false;
 }
 
-function saveAction( action, param ){ //FIX
+function saveAction( action, param ){ //TODO: Refactor
 
 	if( confirm('Are you sure?') ){
 
 		let url = 'saveaction.php';
-		let data = "id=" + action + "&param=" + param; 
-		
+		let data = "id=" + action + "&param=" + param;
+
 		fetch( url, {
 			method	: 'POST',
 			body 	: data,

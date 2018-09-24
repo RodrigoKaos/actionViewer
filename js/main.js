@@ -17,7 +17,7 @@ modal.addEventListener('closeModal', () => {
 // 			let url = 'taskview.php?task=' + el.innerText;
 // 			// console.log(url, el);
 // 			fetch( url )
-// 			.then( response => { 
+// 			.then( response => {
 // 				if (response.ok){
 // 					response.json().then(json => {
 // 						// console.log(json.test)
@@ -25,7 +25,7 @@ modal.addEventListener('closeModal', () => {
 // 						div.classList.add('content');
 // 						div.innerHTML = json.test;//---
 // 						modal.appendChild(div);
-// 					});					
+// 					});
 // 				}
 
 // 			})

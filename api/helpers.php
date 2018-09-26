@@ -10,17 +10,10 @@ function get_connection(){
 	$pass	= 'test';
 	$db		= 'my';
 
-	$con = mysql_connect( $host, $user, $pass );
-	mysql_select_db( $db );
+	$con = @mysql_connect( $host, $user, $pass );
+	@mysql_select_db( $db );
 
 	return $con;
-}
-
-function action_exists( $action ){
-	$query = "SELECT id FROM cq_action WHERE id = $action";
-	$result = mysql_query( $query );
-
-  return !( mysql_num_rows( $result ) == 0 );
 }
 
 function is_indexed( $id, $arr){
@@ -31,4 +24,11 @@ function is_indexed( $id, $arr){
 	return false;
 }
 
-?>
+function json_error( $str, $status = 0 ){
+	return json_encode( 
+		array(
+			'message' => $str, 
+			'status'  => $status 
+		));
+}
+

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function get_npcs_api(){
 	require_once('npc/GET_.php');
@@ -11,7 +11,7 @@ function get_npcs( $map ){
 	$result = mysql_query( $query );
 	while ( $row = mysql_fetch_assoc( $result ) ){
 		$obj = ( object )$row;
-	  	// if ( $obj->task0 == "0000" ) continue;
+	  // if ( $obj->task0 == "0000" ) continue;
 		// if ( $obj->mapid == "0100" ) continue;
 
 		$obj->name = chinese_encode( $obj->name );
@@ -19,4 +19,11 @@ function get_npcs( $map ){
 		$npc_arr[] = $obj;
 	}//TODO: Show total incomplete npcs
 	return $npc_arr;
+}
+
+function action_exists( $action ){
+	$query = "SELECT id FROM cq_action WHERE id = $action";
+	$result = mysql_query( $query );
+
+	return !( mysql_num_rows( $result ) == 0 );
 }

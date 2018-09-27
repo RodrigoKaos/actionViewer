@@ -1,1 +1,5 @@
-<?php //Silence is a true friend... ?>
+<?php 
+
+echo "Silence is a true friend...";
+
+?>

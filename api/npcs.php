@@ -8,4 +8,4 @@ header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ( $method === "GET" )
-	get_npcs_api();
+	npcs_method_get();

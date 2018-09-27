@@ -8,4 +8,4 @@ header('Content-Type: application/json; charset=utf-8');
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ( $method === "GET" )
-	get_actions_api();
+	actions_method_get();

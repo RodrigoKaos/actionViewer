@@ -1,0 +1,30 @@
+.npc-list  {
+  background: #d3d3d3;
+  /* background: #c1c1c1; */
+
+  display: inline-block;
+  margin: 10px;
+
+  min-width: 150px;
+  min-height: 400px;
+}
+
+.npc-list .item {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.search {
+  background: #E0E0E0;
+  cursor: context-menu;
+
+  border: solid 1px;
+}
+
+.incomplete{
+  background: #ff8195;
+}
+
+.npc-list .item span{
+  margin: 0px 5px;
+}

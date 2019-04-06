@@ -10,9 +10,9 @@ function npcs_method_get(){
 	else:
 		if ( !isset( $_GET['map'] ) || !is_numeric( $_GET['map'] ))
 			$_GET['map'] = 0;
-		
+
 		$npc_arr = get_npcs( $_GET['map'] );
-		echo json_encode( $npc_arr );	
+		echo json_encode( $npc_arr );
 
 	endif;
 }
@@ -20,7 +20,7 @@ function npcs_method_get(){
 function get_npcs( $map ){
 	$query = "SELECT id, name, mapid, task0 FROM cq_npc";
 	if ( $map != 0 ) $query .= " WHERE mapid = $map";
-
+	$query .= ' ORDER BY ID';
 	$result = mysql_query( $query );
 	while ( $row = mysql_fetch_assoc( $result ) ){
 		$obj = ( object )$row;

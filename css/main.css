@@ -1,0 +1,25 @@
+@import "fonts.css";
+@import "npc/elements.css";
+
+/* COLOR */
+body {
+  background: #E0E0E0;
+}
+
+header,
+footer,
+.action {
+  background: #d3d3d3;
+  /* background: #c1c1c1; */
+}
+
+/* LAYOUT */
+header,
+footer,
+.action {
+  margin: 10px;
+}
+
+.action {
+  display: inline-block;
+}
